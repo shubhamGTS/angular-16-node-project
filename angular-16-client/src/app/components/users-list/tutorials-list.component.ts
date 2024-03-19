@@ -8,7 +8,12 @@ import { TutorialService } from 'src/app/services/tutorial.service';
   styleUrls: ['./tutorials-list.component.css'],
 })
 export class TutorialsListComponent {
-  tutorials?: Tutorial[];
+  users: Tutorial[] = [
+    { id: 1, title: 'User 1', description: 'Description for User 1' },
+    { id: 2, title: 'User 2', description: 'Description for User 2' },
+    { id: 3, title: 'User 3', description: 'Description for User 3' },
+  ];
+
   currentTutorial: Tutorial = {};
   currentIndex = -1;
   title = '';
@@ -16,13 +21,12 @@ export class TutorialsListComponent {
   constructor(private tutorialService: TutorialService) {}
 
   ngOnInit(): void {
-    this.retrieveTutorials();
   }
 
   retrieveTutorials(): void {
     this.tutorialService.getAll().subscribe({
       next: (data) => {
-        this.tutorials = data;
+        this.users = data;
         console.log(data);
       },
       error: (e) => console.error(e)
@@ -30,7 +34,6 @@ export class TutorialsListComponent {
   }
 
   refreshList(): void {
-    this.retrieveTutorials();
     this.currentTutorial = {};
     this.currentIndex = -1;
   }
@@ -56,7 +59,7 @@ export class TutorialsListComponent {
 
     this.tutorialService.findByTitle(this.title).subscribe({
       next: (data) => {
-        this.tutorials = data;
+        this.users = data;
         console.log(data);
       },
       error: (e) => console.error(e)
